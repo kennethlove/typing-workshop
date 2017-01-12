@@ -3,7 +3,7 @@ from typing import Optional, List
 
 import yaml
 
-CURRENT_DIR = os.path.dirname(os.path.realpath(__file__))
+CURRENT_DIR: str = os.path.dirname(os.path.realpath(__file__))
 
 
 class Person:
@@ -11,7 +11,7 @@ class Person:
         self.name: str = name
         self.email: str = email
 
-    def __str__(self):
+    def __str__(self) -> str:
         return f'{self.name}: {self.email}'
 
     def something_weird(self):
