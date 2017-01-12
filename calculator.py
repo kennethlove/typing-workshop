@@ -1,16 +1,17 @@
-def add(num1: complex, num2: complex) -> complex:
+def add(num1, num2):
     return num1 + num2
 
 
-def subtract(num1: complex, num2: complex) -> complex:
+def subtract(num1, num2):
     return num1 - num2
 
 
-def multiply(num1: complex, num2: complex) -> complex:
+def multiply(num1, num2):
     return num1 * num2
 
 
-def divide(num1: complex, num2: complex) -> complex:
+def divide(num1, num2):
     return num1 / num2
 
 print(add(5, 8.2))
+print(multiply('hello ', 5))
