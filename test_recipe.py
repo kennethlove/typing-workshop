@@ -41,3 +41,13 @@ class RecipeIngredientTestCase(unittest.TestCase):
             str(ri),
             f'{ri.quantity} {ri.measurement} {ri.ingredient}'
         )
+
+
+class RecipeStepTestCase(unittest.TestCase):
+    def test_basic(self):
+        text = "Use a fork to smooth the mixture"
+        rs = recipe.RecipeStep(text)
+        self.assertEqual(rs.text, text)
+        self.assertEqual(str(rs), text)
+
+
