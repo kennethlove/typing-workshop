@@ -1,17 +1,22 @@
+from typing import Union, Optional, List
+
 from ingredient import Ingredient
 
 
 class RecipeIngredient:
-    def __init__(self, ingredient, quantity, measurement=None, condition=None):
+    def __init__(self, ingredient: Union[Ingredient, str], quantity: complex,
+                 measurement: Optional[str]=None,
+                 condition: Optional[str]=None):
+        self.ingredient: Ingredient
         if isinstance(ingredient, Ingredient):
             self.ingredient = ingredient
         else:
             self.ingredient = Ingredient(ingredient)
-        self.quantity = quantity
-        self.measurement = measurement
-        self.condition = condition
+        self.quantity: complex = quantity
+        self.measurement: Optional[str] = measurement
+        self.condition: Optional[str] = condition
 
-    def __str__(self):
+    def __str__(self) -> str:
         condition = ''
         if self.condition:
             condition = f' ({self.condition})'
@@ -23,24 +28,28 @@ class RecipeIngredient:
 
 
 class RecipeStep:
-    def __init__(self, text):
-        self.text = text
+    def __init__(self, text: str):
+        self.text: str = text
 
-    def __str__(self):
+    def __str__(self) -> str:
         return self.text
 
 
 class Recipe:
-    def __init__(self, title):
-        self.title = title
-        self.ingredients = []
-        self.steps = []
+    def __init__(self, title: str):
+        self.title: str = title
+        self.ingredients: List[RecipeIngredient] = []
+        self.steps: List[RecipeStep] = []
 
-    def __str__(self):
+    def __str__(self) -> str:
         return (f'{self.title}: {len(self.ingredients)} ingredients, '
                 f'{len(self.steps)} steps')
 
-    def add_ingredient(self, ingredient, quantity=None, measurement=None, condition=None):
+    def add_ingredient(self,
+                       ingredient: Union[RecipeIngredient, Ingredient, str],
+                       quantity: Optional[complex]=None,
+                       measurement: Optional[str]=None,
+                       condition: Optional[str]=None) -> None:
         if isinstance(ingredient, RecipeIngredient):
             self.ingredients.append(ingredient)
         else:
@@ -49,13 +58,13 @@ class Recipe:
                 RecipeIngredient(ingredient, quantity, measurement, condition)
             )
 
-    def add_step(self, text, order=-1):
+    def add_step(self, text: Union[RecipeStep, str], order :int=-1) -> None:
         if isinstance(text, RecipeStep):
             self.steps.insert(order, text)
         else:
             self.steps.insert(order, RecipeStep(text))
 
-    def print(self):
+    def print(self) -> None:
         print(self.title)
         for ingredient in self.ingredients:
             print(ingredient)
