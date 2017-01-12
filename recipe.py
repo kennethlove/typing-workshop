@@ -17,9 +17,10 @@ class RecipeIngredient:
         self.condition: Optional[str] = condition
 
     def __str__(self) -> str:
-        condition = ''
+        condition: str = ''
         if self.condition:
             condition = f' ({self.condition})'
+        amount: str
         if self.measurement:
             amount = f'{self.quantity} {self.measurement}'
         else:
