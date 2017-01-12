@@ -1,4 +1,5 @@
 import os
+from typing import Optional, List
 
 import yaml
 
@@ -6,21 +7,25 @@ CURRENT_DIR = os.path.dirname(os.path.realpath(__file__))
 
 
 class Person:
-    def __init__(self, name, email):
-        self.name = name
-        self.email = email
+    def __init__(self, name: str, email: str) -> None:
+        self.name: str = name
+        self.email: str = email
 
     def __str__(self):
         return f'{self.name}: {self.email}'
 
+    def something_weird(self):
+        return self.email - 5
+
 
 class AddressBook(set):
-    def __init__(self, iterable=None, filename=None):
+    def __init__(self, iterable:Optional[List[Person]]=None, filename:Optional[str]=None):
         self.file = os.path.join(CURRENT_DIR, filename or 'address_book.yml')
         self._load_all()
         super().__init__(iterable or [])
 
     def _load_all(self):
+        records: set
         try:
             with open(self.file, 'r+') as file:
                 records = yaml.load(file.read())
@@ -40,14 +45,14 @@ class AddressBook(set):
         except FileNotFoundError:
             pass
 
-    def search(self, name):
+    def search(self, name: str):
         return filter(lambda p: p.name == name, self)
 
-    def add_record(self, person):
+    def add_record(self, person: Person) -> None:
         self.add(person)
         self._save()
 
-    def remove_record(self, person):
+    def remove_record(self, person: Person) -> None:
         self.remove(person)
         self._save()
 

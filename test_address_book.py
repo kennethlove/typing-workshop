@@ -30,3 +30,6 @@ class AddressBookTests(unittest.TestCase):
         self.address_book.add_record(self.p1)
         self.address_book.remove_record(self.p1)
         self.assertNotIn(self.p1, self.address_book)
+
+    def test_shortcut(self):
+        self.address_book.add_record("Kenneth")
