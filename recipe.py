@@ -2,7 +2,7 @@ from ingredient import Ingredient
 
 
 class RecipeIngredient:
-    def __init__(self, ingredient, quantity, measurement, condition=None):
+    def __init__(self, ingredient, quantity, measurement=None, condition=None):
         if isinstance(ingredient, Ingredient):
             self.ingredient = ingredient
         else:
@@ -15,8 +15,11 @@ class RecipeIngredient:
         condition = ''
         if self.condition:
             condition = f' ({self.condition})'
-        return (f'{self.quantity} {self.measurement} '
-                f'{self.ingredient}{condition}')
+        if self.measurement:
+            amount = f'{self.quantity} {self.measurement}'
+        else:
+            amount = self.quantity
+        return f'{amount} {self.ingredient}{condition}'
 
 
 class RecipeStep:
@@ -37,13 +40,20 @@ class Recipe:
         return (f'{self.title}: {len(self.ingredients)} ingredients, '
                 f'{len(self.steps)} steps')
 
-    def add_ingredient(self, ingredient, quantity, measurement, condition=None):
-        self.ingredients.append(
-            RecipeIngredient(ingredient, quantity, measurement, condition)
-        )
+    def add_ingredient(self, ingredient, quantity=None, measurement=None, condition=None):
+        if isinstance(ingredient, RecipeIngredient):
+            self.ingredients.append(ingredient)
+        else:
+            assert quantity
+            self.ingredients.append(
+                RecipeIngredient(ingredient, quantity, measurement, condition)
+            )
 
     def add_step(self, text, order=-1):
-        self.step.insert(order, RecipeStep(text))
+        if isinstance(text, RecipeStep):
+            self.steps.insert(order, text)
+        else:
+            self.steps.insert(order, RecipeStep(text))
 
     def print(self):
         print(self.title)
