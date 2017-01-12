@@ -10,8 +10,7 @@ class AddressBookTests(unittest.TestCase):
         self.p2 = address_book.Person("Two", "two@example.com")
 
     def tearDown(self):
-        # self.address_book.clear()
-        pass
+        self.address_book.clear()
 
     def test_add_person(self):
         self.address_book.add_record(self.p1)
